@@ -34,7 +34,10 @@ jobs:
       - name: Rebuild the dist/ directory
         run: |
           npm run build
-          npm run package
+      
+      # Workaround to https://github.com/vercel/ncc/issues/638
+      - name: Correct vercel/ncc crlf output
+        run: sed -i 's/\x0D$//' ./dist/setup/index.js
 
       - name: Compare the expected and actual dist/ directories
         run: |

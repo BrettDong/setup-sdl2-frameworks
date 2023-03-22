@@ -1,11 +1,27 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Setup SDL2 frameworks'
+description: 'Install SDL2 frameworks in macOS GitHub Actions runners'
+author: 'BrettDong'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  dest:
+    description: 'Installation destination'
+    required: false
+    default: '/Users/runner/Library/Frameworks'
+  sdl2:
+    description: 'SDL2 version'
+    required: false
+    default: 'none'
+  sdl2-ttf:
+    description: 'SDL2-ttf version'
+    required: false
+    default: 'none'
+  sdl2-image:
+    description: 'SDL2-image version'
+    required: false
+    default: 'none'
+  sdl2-mixer:
+    description: 'SDL2-mixer version'
+    required: false
+    default: 'none'
 runs:
   using: 'node16'
-  main: 'dist/index.js'
+  main: 'dist/setup/index.js'

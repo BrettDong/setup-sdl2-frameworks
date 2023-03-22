@@ -11,18 +11,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16.x
       - name: Install dependencies
         run: |
           npm install
-      - name: Test
-        env:
-          NODE_OPTIONS: "--openssl-legacy-provider"
+      - name: Build
         run: |
           npm run all
   test: # make sure the action works on a clean machine without building
-    runs-on: ubuntu-latest
+    runs-on: macos-12
     steps:
       - uses: actions/checkout@v3
-      - uses: ./
+      - name: Setup SDL2 frameworks
+        id: sdl2
+        uses: ./
         with:
-          milliseconds: 1000
+          sdl2: 2.26.4
+          sdl2-ttf: 2.20.2
+          sdl2-image: 2.6.3
+          sdl2-mixer: 2.6.3
+      - name: Upload temp working directory if failed
+        uses: actions/upload-artifact@v3
+        if: ${{ failure() && steps.sdl2.conclusion == 'failure' }}
+        with:
+          name: temp
+          path: '/Users/runner/work/_temp'
+      - name: Inspect local Framework directory
+        run: 'find ~/Library/Frameworks'
