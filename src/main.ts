@@ -4,7 +4,7 @@ import * as io from '@actions/io'
 import * as tc from '@actions/tool-cache'
 import * as dmg from 'dmg'
 import path from 'path'
-import { promisify } from 'util'
+import {promisify} from 'util'
 
 interface SDL2Component {
   name: string
@@ -103,11 +103,11 @@ async function getRelease(
 ): Promise<Release> {
   if (version === 'latest') {
     if (component.name === 'sdl2') {
-      return getSpecifiedRelease(component, '2.30.11');
+      return getSpecifiedRelease(component, '2.30.11')
     } else if (component.name === 'sdl2-ttf') {
-      return getSpecifiedRelease(component, '2.24.0');
+      return getSpecifiedRelease(component, '2.24.0')
     } else if (component.name === 'sdl2-image') {
-      return getSpecifiedRelease(component, '2.8.4');
+      return getSpecifiedRelease(component, '2.8.4')
     }
     return await getLatestRelease(component)
   } else {
@@ -165,7 +165,7 @@ async function install(component: SDL2Component): Promise<void> {
   core.info(`Installed ${component.name} ${version} to ${finalPath}`)
 }
 
-async function run(): Promise<void> {
+export async function run(): Promise<void> {
   try {
     await io.mkdirP(core.getInput('dest'))
     for (const component of sdl2Components) {
@@ -175,5 +175,3 @@ async function run(): Promise<void> {
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
-
-run()

@@ -32,4 +32,4 @@ inputs:
     default: 'none'
 runs:
   using: 'node20'
-  main: 'dist/setup/index.js'
+  main: 'dist/index.js'
